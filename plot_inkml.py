@@ -10,7 +10,7 @@ def plot_inkml(data, plot=True, save=False):
         filename = data
         data = parse_inkml(data)  # Parses the inkml file if the input data is a filename (string) instead of some already processed inkml data (list)
 
-    for i in range(0, len(data)):  # data is a list of traces; each element contains a trace, and each trace has a list of [x ,y] coordinates
+    for i in range(0, len(data)):  # data is a list of traces; each element contains a trace, and each trace has a list of [x, y] coordinates
         x = []
         y = []
         for j in range(0, len(data[i])):  # Returns j-th point of each trace
