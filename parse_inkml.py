@@ -16,4 +16,6 @@ def parse_inkml(inkml_file):
             trace.append([float(x), float(y)])  # Re-adds them to a temporary trace as a [x, y] array
         data.append(trace)  # Adds trace to final data (another list of traces, but in a processed, functional format)
 
+    f.close()
+
     return data  # Returns a list of inkml traces, each containing a list of [x, y] coordinates
