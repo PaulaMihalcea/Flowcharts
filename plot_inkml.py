@@ -29,8 +29,8 @@ def plot_inkml(data, plot=True, save=False, classes=False):
         else:
             plt.plot(x, y, color='black', linewidth=0.6)  # Plots current trace in plain black
 
-    plt.axis('equal')  # Constrains proportions
-    plt.axis('off')  # Removes axes from figure
+    plt.axis('equal')  # Constrain proportions
+    plt.axis('off')  # Remove axes from figure
 
     if plot:  # Only shows plot if plot = True
         plt.show()

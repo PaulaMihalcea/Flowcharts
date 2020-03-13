@@ -50,24 +50,21 @@ def bounding_boxes(inkml_file, plot=False):
         bboxs = bboxs.append({'x_min': group_x[0], 'x_max': group_x[len(group_x) - 1], 'y_min': group_y[0], 'y_max': group_y[len(group_y) - 1], 'class': label}, ignore_index=True)  # Save minimum and maximum [x, y] coordinates to the bboxs dataframe
         # Add +1 to the maximum coordinates and -1 to the minimum to get
 
-        x_coord = [group_x[0]-1, group_x[len(group_x) - 1] + 1, group_x[len(group_x) - 1] + 1, group_x[0] - 1, group_x[0] - 1]  # Contain all x coordinates of a bounding box, plus the first one repeated to be able to draw a rectangle over the figure
-        y_coord = [group_y[len(group_y) - 1] + 1, group_y[len(group_y) - 1] + 1, group_y[0] - 1, group_y[0] - 1, group_y[len(group_y) - 1] + 1]  # Contain all x coordinates of a bounding box, plus the first one repeated to be able to draw a rectangle over the figure
+        x_coord = [group_x[0], group_x[len(group_x)-1], group_x[len(group_x)-1], group_x[0], group_x[0]]  # Contain all x coordinates of a bounding box, plus the first one repeated to be able to draw a rectangle over the figure
+        y_coord = [group_y[len(group_y)-1], group_y[len(group_y)-1], group_y[0], group_y[0], group_y[len(group_y)-1]]  # Contain all x coordinates of a bounding box, plus the first one repeated to be able to draw a rectangle over the figure
 
         if plot:  # If plot = True, plot one by one the resulting bounding boxes over the original figure from data coordinates (not pixels!), that has also been plotted if plot = True
             plt.plot(x_coord, y_coord, color=colors[label], linewidth=1)
 
     pboxs = pd.DataFrame(columns=cols)  # Create a new dataframe containing the pixel coordinates of the bounding boxes
 
-    # Get the minimum and maximum [x, y] coordinates of the generated plot
-    x_lim_min = plt.gca().get_xlim()[0]
-    x_lim_max = plt.gca().get_xlim()[1]
-    y_lim_min = plt.gca().get_ylim()[0]
-    y_lim_max = plt.gca().get_ylim()[1]
-
-    print('Calculating pixel coordinates', end='')
+    filename = inkml_file.split('/')
+    print('Calculating pixel coordinates for ' + filename[len(filename)-1], end='')
 
     for i in range(0, len(bboxs)):  # Transform data coordinates in bboxs to pixel coordinates
-        pboxs = transform_coord(data, bboxs, i, pboxs, x_lim_min, x_lim_max, y_lim_min, y_lim_max)
+        pboxs = transform_coord(data, bboxs, i, pboxs)
+
+    print()
 
     if plot:  # If plot = True, show the generated plot; the whole plot thing is for debug purposes only (and nice, coloured images)
         plt.show()
