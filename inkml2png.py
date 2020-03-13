@@ -14,7 +14,7 @@ def inkml2png(inkml_folder):  # inkml_folder must be in the same directory as th
     for filename in os.listdir(inkml_folder):
         if '.inkml' in filename:  # Only considers inkml files in folder
             print('Converting ' + filename + '... ', end='')
-            plot_inkml(inkml_folder + '/' + filename, show=False, save=True)  # Parses, plots and saves an inkml file
+            plot_inkml(inkml_folder + '/' + filename, plot=False, save=True)  # Parses, plots and saves an inkml file
             print('done!')
 
     print('Dataset conversion completed.')

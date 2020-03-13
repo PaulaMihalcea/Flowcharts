@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from parse_inkml import parse_inkml
-
 from transform_coord import transform_coord
 
 
@@ -14,13 +13,8 @@ def bounding_boxes(inkml_file, plot=False):
 
     if plot:  # If plot = True, plot the original figure first
 
-        colors = {'Arrow': 'lightseagreen',  # List of colors for each class
-                  'Connection': 'gold',
-                  'Data': 'darkgreen',
-                  'Decision': 'darkorange',
-                  'Process': 'darkblue',
-                  'Terminator': 'darkred',
-                  'Text': 'darkgrey'}
+        with open('colors','r') as c:  # List of colors for each class, read from the 'colors' file
+            colors = eval(c.read())
 
         for i in range(0, len(data['trace'])):  # data['trace'] is a list of traces; each element contains a trace, and each trace has a list of [x, y] coordinates
             x = []  # Contains current trace x coordinates
@@ -58,12 +52,13 @@ def bounding_boxes(inkml_file, plot=False):
 
     pboxs = pd.DataFrame(columns=cols)  # Create a new dataframe containing the pixel coordinates of the bounding boxes
 
-    filename = inkml_file.split('/')
-    print('Calculating pixel coordinates for ' + filename[len(filename)-1], end='')
+    filename = inkml_file.split('/')[len(inkml_file.split('/'))-1]  # Gets the current file name from the inkml file path
+    print('Calculating pixel coordinates for ' + filename, end='')
 
     for i in range(0, len(bboxs)):  # Transform data coordinates in bboxs to pixel coordinates
         pboxs = transform_coord(data, bboxs, i, pboxs)
 
+    print('Done.')
     print()
 
     if plot:  # If plot = True, show the generated plot; the whole plot thing is for debug purposes only (and nice, coloured images)

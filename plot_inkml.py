@@ -6,13 +6,8 @@ def plot_inkml(data, plot=True, save=False, classes=False):
 
     filename = None
 
-    colors = {'Arrow': 'lightseagreen',  # List of colors for each class
-              'Connection': 'gold',
-              'Data': 'darkgreen',
-              'Decision': 'darkorange',
-              'Process': 'darkblue',
-              'Terminator': 'darkred',
-              'Text': 'darkgrey'}
+    with open('colors','r') as c:  # List of colors for each class, read from the 'colors' file
+        colors = eval(c.read())
 
     if isinstance(data, str):
         filename = data
