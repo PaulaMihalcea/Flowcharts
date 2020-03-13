@@ -46,7 +46,7 @@ def transform_coord(data, bboxs, i, pboxs):
     x.sort()
     y.sort()
 
-    e = 0  # Pixels for defining bounding box margin error (the larger e, the larger the bounding box around the object)
+    e = 1  # Pixels for defining bounding box margin error (the larger e, the larger the bounding box around the object)
 
     # Minimum and maximum pixel coordinates with margin
     x_min = int(x[0]) - e

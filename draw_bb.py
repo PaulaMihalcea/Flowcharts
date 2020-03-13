@@ -51,7 +51,7 @@ def draw_bb(inkml_file, show=False, scale=1, save=False, save_bb=False):
         if not os.path.exists(bb_folder):  # Creates folder if it doesn't already exist (to avoid 'directory not found' errors)
             os.makedirs(bb_folder)
 
-        cv2.imwrite('./' + bb_folder + '/' + filename + '.png', img)
+        cv2.imwrite('./' + bb_folder + '/' + filename , img)
 
     if save_bb:
         return pboxs
