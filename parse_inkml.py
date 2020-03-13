@@ -9,13 +9,13 @@ def parse_inkml(inkml_file):
     data = pd.DataFrame(columns=cols)  # data is a dataframe where the column 'trace' is a list of traces; each row contains a trace, and each trace has a list of [x, y] coordinates. Column 'class' represents the class to which the trace belongs to (see 'classes' below), while 'group_id' is the specific figure the trace belongs to (e.g. the START ellipse)
     raw_data = []  # raw_data is also a list of traces, but as the name suggests it is not ready to be further processed, as each point (made of x, y coordinates) consists of a single string item
 
-    classes = {'arrow': 0,       # This is the list of possible classes a trace can belong to
-               'connection': 1,
-               'data': 2,
-               'decision': 3,
-               'process': 4,
-               'terminator': 5,
-               'text': 6}
+    classes = {'arrow': 'Arrow',       # This is the list of possible classes a trace can belong to
+               'connection': 'Connection',
+               'data': 'Data',
+               'decision': 'Decision',
+               'process': 'Process',
+               'terminator': 'Terminator',
+               'text': 'Text'}
 
     for line in f:
         if line.startswith('<trace id'):  # Identifies trace lines
@@ -37,7 +37,7 @@ def parse_inkml(inkml_file):
 
     for line in f:
         if line.startswith('		<annotation type'):  # Identifies trace group annotation lines
-            label = int(classes[line.replace('<annotation type="truth">', '').replace('\t', '').replace('\n', '').replace('</annotation>', '')])  # Extracts trace group class
+            label = classes[line.replace('<annotation type="truth">', '').replace('\t', '').replace('\n', '').replace('</annotation>', '')]  # Extracts trace group class
             group_id += 1  # A new group of traces is going to be added to the dataset, so the group id must be increased
 
         if line.startswith('		<traceView traceDataRef'):  # Identifies single traces within a trace group annotation

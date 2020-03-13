@@ -6,13 +6,13 @@ def plot_inkml(data, plot=True, save=False, classes=False):
 
     filename = None
 
-    colors = {0: 'lightseagreen',  # List of colors for each class
-              1: 'gold',
-              2: 'darkgreen',
-              3: 'darkorange',
-              4: 'darkblue',
-              5: 'darkred',
-              6: 'darkgrey'}
+    colors = {'Arrow': 'lightseagreen',  # List of colors for each class
+              'Connection': 'gold',
+              'Data': 'darkgreen',
+              'Decision': 'darkorange',
+              'Process': 'darkblue',
+              'Terminator': 'darkred',
+              'Text': 'darkgrey'}
 
     if isinstance(data, str):
         filename = data
