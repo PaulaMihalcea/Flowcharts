@@ -6,4 +6,4 @@ from png2bb import png2bb
 #inkml2png('NeoSmartpenM1_demo')
 
 # Bounding box drawing
-png2bb('FCinkML')
+png2bb('FCinkML', save_bb=True)

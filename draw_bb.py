@@ -3,7 +3,7 @@ import cv2
 from bounding_boxes import bounding_boxes
 
 
-def draw_bb(inkml_file, show=False, scale=1, save=False):
+def draw_bb(inkml_file, show=False, scale=1, save=False, save_bb=False):
 
     filename = inkml_file.split('/')[len(inkml_file.split('/'))-1].replace('.inkml', '.png')  # Gets the current file name from the inkml file path
 
@@ -52,3 +52,6 @@ def draw_bb(inkml_file, show=False, scale=1, save=False):
             os.makedirs(bb_folder)
 
         cv2.imwrite('./' + bb_folder + '/' + filename + '.png', img)
+
+    if save_bb:
+        return pboxs
