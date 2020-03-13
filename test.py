@@ -16,6 +16,8 @@ for i in range(0, n+1):
 show = True
 plot_inkml(parse_inkml('./FCinkML/writer3_5.inkml'), plot=show)  # Plots a random inkml file from the dataset (by parsed data)
 plot_inkml('./FCinkML/writer3_5.inkml', plot=show)  # Plots a random inkml file from the dataset (by filename)
+plot_inkml(parse_inkml('./FCinkML/writer3_5.inkml'), plot=show, classes=True)  # Plots a random inkml file from the dataset (by parsed data) and highlights classes
+plot_inkml('./FCinkML/writer3_5.inkml', plot=show, classes=True)  # Plots a random inkml file from the dataset (by filename) and highlights classes
 
 # Dataset conversion (do only once)
 inkml2png('FCinkML')  # Converts the inkml files in the specified folder to png images; folder must be in the same directory as the inkml2png.py script

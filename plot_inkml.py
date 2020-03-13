@@ -2,21 +2,32 @@ import matplotlib.pyplot as plt
 from parse_inkml import parse_inkml
 
 
-def plot_inkml(data, plot=True, save=False):
+def plot_inkml(data, plot=True, save=False, classes=False):
 
     filename = None
+
+    colors = {0: 'lightseagreen',  # List of colors for each class
+              1: 'gold',
+              2: 'darkgreen',
+              3: 'darkorange',
+              4: 'darkblue',
+              5: 'darkred',
+              6: 'darkgrey'}
 
     if isinstance(data, str):
         filename = data
         data = parse_inkml(data)  # Parses the inkml file if the input data is a filename (string) instead of some already processed inkml data (list)
 
-    for i in range(0, len(data)):  # data is a list of traces; each element contains a trace, and each trace has a list of [x, y] coordinates
+    for i in range(0, len(data['trace'])):  # data['trace'] is a list of traces; each element contains a trace, and each trace has a list of [x, y] coordinates
         x = []
         y = []
-        for j in range(0, len(data[i])):  # Returns j-th point of each trace
-            x.append(data[i][j][0])  # Returns x coordinate of the j-th point of each trace
-            y.append(-data[i][j][1])  # Returns y coordinate of the j-th point of each trace
-        plt.plot(x, y, color='black', linewidth=0.6)  # Plots current trace
+        for j in range(0, len(data['trace'][i])):  # Returns j-th point of each trace
+            x.append(data['trace'][i][j][0])  # Returns x coordinate of the j-th point of each trace
+            y.append(data['trace'][i][j][1])  # Returns y coordinate of the j-th point of each trace
+        if classes:
+            plt.plot(x, y, color=colors[data['class'][i]], linewidth=0.6)  # Plots current trace highlighting the trace's class with a specific color
+        else:
+            plt.plot(x, y, color='black', linewidth=0.6)  # Plots current trace in plain black
 
     plt.axis('equal')  # Constrains proportions
     plt.axis('off')  # Removes axes from figure
