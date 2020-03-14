@@ -1,6 +1,7 @@
 from inkml2png import inkml2png
 from png2bb import png2bb
 from bb_test import bb_test
+from divide_annotations import divide_annotations
 
 # Dataset conversion
 inkml2png('FCinkML')  # Convert the inkml files in the specified folder to png images; folder must be in the same directory as the inkml2png.py script
@@ -11,3 +12,7 @@ png2bb('FCinkML', save_bb=True)  # Draw bounding boxes over the previously creat
 
 # Bounding box drawing (test csv file)
 bb_test('annotation.txt')
+
+# Train and test annotations generation from the file list in the original dataset
+divide_annotations('annotation.csv', './FCinkML/listInkML_Test.txt', 'test')
+divide_annotations('annotation.csv', './FCinkML/listInkML_Train.txt', 'train')
