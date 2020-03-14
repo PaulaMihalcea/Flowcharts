@@ -12,11 +12,10 @@ inkml2png('NeoSmartpenM1_demo')
 png2bb('FCinkML', save_bb=True)  # Draw bounding boxes over the previously created png files and saves their pixel coordinates to a text file when done
 
 # Bounding box drawing (test csv file)
-bb_test('annotation.txt')
+bb_test('./FCinkML_png/', 'annotation.txt')
 
 # Train and test annotations generation from the file list in the original dataset
-divide_annotations('annotation.csv', './FCinkML/listInkML_Train.txt', 'train')
-divide_annotations('annotation.csv', './FCinkML/listInkML_Test.txt', 'test')
+divide_annotations('annotation.csv', './FCinkML/listInkML_Train.txt', './FCinkML/listInkML_Test.txt')
 
 # Dataset
 divide_dataset('./FCinkML_png', './FCinkML/listInkML_Train.txt', './FCinkML/listInkML_Test.txt')

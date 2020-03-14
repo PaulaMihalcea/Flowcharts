@@ -1,6 +1,20 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
+# Note from the author:
+
+# This function is the result of many simpler solutions failed because of matplotlib's incompetence.
+
+# Its original purpose was to transform the data coordinates of a plot to pixel coordinates, but to do this it had to be enclosed in a separate function that duplicates much code found in its calling function, bounding_boxes().
+
+# Initially, it was supposed to consist of a few lines of code in bounding_boxes() but, as it turned out, including the matplotlib function Axes.transData.transform() in a loop will cause it to return the same results even when applied to different inputs.
+
+# Since enclosing it in an external function would have required duplicating much code (because matplotlib doesn't return plot objects, so each time you need one you have to generate it again), the next experiment was implementing multi-threading to call Axes.transData.transform() in parallel, instead of sequentially in a loop. Turns out neither matplotlib nor Pandas are thread-safe, unless you only use 'ax' in matplotlib and never call 'plt', but guess what, they are not completely equivalent and you cannot avoid calling plt. Another failed experiment.
+
+# Finally, after adopting the current solution, the matplotlib transform function appears to be working correctly. However, calling the bounding_boxes() function in loop over more than 10 files at once causes it to become really slow, so for the conversion of an entire dataset it is better to call it manually on 5 files at a time. Multi-threading might be an option for this, but it has not been tried.
+
+# In conclusion, matplotlib is evil. Avoid it if you can.
+
 
 def transform_coord(data, bboxs, i, pboxs):
 

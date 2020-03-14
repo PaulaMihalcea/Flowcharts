@@ -1,0 +1,150 @@
+CORE FUNCTIONS
+
+The following are part of the core functions of the project, as they are need for parsing, converting and calculating bounding boxes of the original inkml files.
+
+
+-----
+
+bounding_boxes(inkml_file:string, plot:bool=False) - return: pboxs:pandas.DataFrame, bboxs:pandas.DataFrame
+
+After parsing the given inkml file, creates a Pandas dataframe named 'bboxs' containing the data/plot coordinates of the bounding box for each group of traces (calculated after the annotations in the original inkml file), then converts it to a new dataframe ('pboxs') containing the actual pixel coordinates that can be found in the png files. If plot=True, it also shows the plot of the inkml file with each block highlighted according to its class (e.g. terminator blocks will be a different color from data blocks).
+
+-----
+
+*draw_bb(inkml_file:string, show:bool=False, scale:float=1, save:bool=False, save_bb:bool=False) - return: nothing / pboxs:pandas.DataFrame [iff. save_bb=True]
+
+Given an inkml file, it calculates the pixel coordinates of the bounding boxes (using bounding_boxes.py) and draws them over a copy of the original png image; if show=True, shows the image with the bounding boxes; if save=True, it saves the new image to a new folder named after the file folder, but with '_bb' added to the end; if save_bb=True, returns the pixel coordinates dataframe computed by bounding_boxes.py ('pboxs').
+
+-----
+
+parse_inkml(inkml_file:string) - return: data:pandas.DataFrame
+
+Given an inkml file, it parses it and returns a Pandas dataframe containing the complete list of traces, each with its [x, y] coordinates and the trace group they belong to, along with the group's class.
+
+-----
+
+plot_inkml(data:pandas.DataFrame, plot:bool=True, save:bool=False, classes:bool=False) - return: nothing
+
+Given an inkml file, it parses it using parse_inkml.py and plots the traces coordinates using matplotlib; if plot=True, it shows the generated plot; if save=True, it saves the plot to a png image in a new folder; if classes=True, it draws each trace group (flowchart block or figure) using its class colour (it looks nicer).
+
+-----
+
+*png2bb_single(inkml_folder:string, inkml_file:string, save_bb:bool=False) - return: nothing
+
+Gets the pixel coordinates for the bounding boxes of the specified inkml file; if save_bb=True, it saves them to the 'annotation_pathless.txt' csv file; if save_image=True, it saves a copy of the original png image with the calculated bounding boxes drawn over it (for debug purposes only). Basically the same as png2bb.py, but for only a file instead of the whole folder.
+
+-----
+
+svg2inkml(svg_file:string, inkml_file:string) - return: nothing
+
+Parses a svg file and converts it in a plain inkml file (no annotations). Only path coordinates are written to the inkml file; any other information (line width, color, etc.) is lost.
+
+-----
+
+transform_coord(data:pandas.DataFrame, bboxs:pandas.DataFrame, i:int, pboxs:pandas.DataFrame) - return: pboxs:pandas.DataFrame
+
+Transforms the data coordinates of a parsed inkml file (saved in the 'data' dataframe) to pixel coordinates.
+
+
+
+*********************************************
+
+RUN ONCE FUNCTIONS
+
+The following functions (named after the scripts they are defined in) are meant to be run only once, as they are needed for the creation of the png dataset from the inkml files and their annotations.
+
+
+-----
+
+add_annotation_path(file:string, path:string) - return: nothing
+
+Given a csv annotation file with only the file names specified, adds the specified path before each file name and saves it in a new csv.
+
+-----
+
+*bb_test(img_folder:string, csv_file:string) - return: nothing
+
+Draws bounding boxes over the images in the img_folder using the annotations in the specified file; for debug purposes only (it's a visual check for the bounding boxes coordinates accuracy).
+
+-----
+
+divide_annotations(annotations_path:string, train_list:string, test_list:string) - return: nothing
+
+Given the annotation file of the whole dataset and two lists of train and test files respectively, creates two smaller annotation files, one for each train/test list.
+
+-----
+
+divide_dataset(dataset_path:string, train_list:string, test_list:string) - return: nothing
+
+Given the dataset folder and two lists of train and test files respectively, copies all files to two smaller folders containing only the ones listed in the train/test files.
+
+-----
+
+inkml2png(inkml_folder:string) - return: nothing
+
+Converts the inkml files in the 'inkml_folder' folder to png files with the same name, saved in a new folder named after the original one.
+
+-----
+
+*png2bb(inkml_folder:string, save_bb:bool=False, save_image:bool=False) - return: nothing
+
+Gets the pixel coordinates for the bounding boxes of the inkml files in the folder 'inkml_folder'; if save_bb=True, it saves them to the 'annotation_pathless.txt' csv file; if save_image=True, it saves a copy of the original png image with the calculated bounding boxes drawn over it (for debug purposes only).
+
+
+
+*********************************************
+
+FILES
+
+These files are either used for storing settings or have been generated by the scripts in this folder.
+
+
+-----
+
+annotation.csv
+
+Contains the correct pixel annotations for the bounding boxes of each png file in the dataset.
+
+-----
+
+annotation_test.txt
+
+Contains annotations only for the test files in the dataset.
+
+-----
+
+annotation_train.txt
+
+Contains annotations only for the train files in the dataset.
+
+-----
+
+colors
+
+Simple Python dictionary containing the RGB colors (normalized to the (0, 1) range) for each flowchart figure. These colors are used in more than one script, so putting them in one file makes redefining them easier.
+
+-----
+
+demo.py
+
+Simple script that calls some of the functions in the project and shows some plots, to prove their effectiveness.
+
+-----
+
+readme.txt
+
+Pretty much self-explanatory.
+
+-----
+
+run_once.py
+
+Contains the instructions to create the png dataset from the inkml files, and as the name implies, it is to be run only once, in the beginning.
+
+
+
+*********************************************
+
+NOTES
+
+Functions marked with require that the png files must have been created before calling them, even though they only require inkml files.

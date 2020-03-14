@@ -3,7 +3,7 @@ import cv2
 import pandas as pd
 
 
-def bb_test(csv_file):
+def bb_test(img_folder, csv_file):
     cols = ['filename', 'x_min', 'y_min', 'x_max', 'y_max', 'class']  # csv file columns
 
     pboxs = pd.read_csv(csv_file, header=None)  # Loads csv file as a Pandas dataframe
@@ -42,7 +42,7 @@ def bb_test(csv_file):
             old_filename = pboxs['filename'][i-1]
 
         filename = pboxs['filename'][i]
-        img_path = './FCinkML_png/' + pboxs['filename'][i]  # Path of the original image (no bounding boxes drawn)
+        img_path = img_folder + pboxs['filename'][i]  # Path of the original image (no bounding boxes drawn)
 
         if filename != old_filename or filename is None:  # Load a new image if this is the first iteration or the file name has changed in the current dataframe line
             img = cv2.imread(img_path)
