@@ -4,7 +4,7 @@ import pandas as pd
 from draw_bb import draw_bb
 
 
-def png2bb(inkml_folder, save_bb=False):  # inkml_folder must be in the same directory as this script
+def png2bb(inkml_folder, save_bb=False, save_image=False):  # inkml_folder must be in the same directory as this script
 
     bb_folder = inkml_folder + '_png_bb'  # New bb folder name
 
@@ -19,17 +19,17 @@ def png2bb(inkml_folder, save_bb=False):  # inkml_folder must be in the same dir
     print('Bounding box drawing started...')
 
     for file in os.listdir(inkml_folder):
-            if '.inkml' in file:  # Only considers inkml files in folder
-                print('    - drawing bounding boxes over ' + file.replace('.inkml', '.png') + '... ', end='')
+        if '.inkml' in file:  # Only considers inkml files in folder
+            print('    - drawing bounding boxes over ' + file.replace('.inkml', '.png') + '... ', end='')
 
-                if save_bb:  # If save_bb = True, append the pboxs and filename of the current file to the boxes and filename list
-                    pboxs = draw_bb('./' + inkml_folder + '/' + file, save=True, save_bb=True)  # Draws bounding boxes on a png file and saves a copy
-                    boxes.append(pboxs)
-                    filename.extend(np.full((1, len(pboxs)), file.replace('.inkml', '.png')).tolist().pop(0))
-                else:
-                    draw_bb('./' + inkml_folder + '/' + file, save=True)  # Draw bounding boxes on a png file and saves a copy
+            if save_bb:  # If save_bb = True, append the pboxs and filename of the current file to the boxes and filename list
+                pboxs = draw_bb('./' + inkml_folder + '/' + file, save=save_image, save_bb=True)  # Draws bounding boxes on a png file and saves a copy
+                boxes.append(pboxs)
+                filename.extend(np.full((1, len(pboxs)), file.replace('.inkml', '.png')).tolist().pop(0))
+            else:
+                draw_bb('./' + inkml_folder + '/' + file, save=save_image)  # Draw bounding boxes on a png file and saves a copy
 
-                print('done!')
+            print('done!')
 
     print('Bounding box drawing completed.')
 

@@ -39,13 +39,6 @@ def png2bb_single(inkml_folder, inkml_file, save_bb=False):  # inkml_folder must
         annotation['x_max'] = annotation['x_max'].astype(int)
         annotation['y_max'] = annotation['y_max'].astype(int)
 
-        annotation.to_csv(inkml_folder + '/annotation_pathless_' + inkml_file + '.txt', columns=cols, header=False, index=False)  # Save file
+        annotation.to_csv(inkml_folder + '/annotation_pathless_' + inkml_file.replace('.inkml', '') + '.txt', columns=cols, header=False, index=False)  # Save file
 
-        print('Annotation data saved to annotation_pathless_' + inkml_file + '.txt.')
-
-
-file = '4_11'
-inkml_folder = 'FCinkML'
-inkml_file = 'writer' + file + '.inkml'
-
-png2bb_single(inkml_folder, inkml_file, save_bb=True)
+        print('Annotation data saved to annotation_pathless_' + inkml_file.replace('.inkml', '') + '.txt.')

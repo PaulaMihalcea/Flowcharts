@@ -1,7 +1,8 @@
-def add_annotation_path(path):
+def add_annotation_path(file, path):
 
-    with open('annotation_pathless.txt', 'r') as file_in:
-        with open('annotation.txt', 'w') as file_out:
+    with open(file, 'r') as file_in:
+        new_file = file.replace('_pathless', '') + '_with_path.txt'
+        with open(new_file, 'w') as file_out:
             for line in file_in:
                 filename = line.split(',')[0]
                 if path[0] == '/':
