@@ -4,7 +4,9 @@ from parse_inkml import parse_inkml
 from transform_coord import transform_coord
 
 
-def bounding_boxes(inkml_file, plot=False):
+def bounding_boxes(inkml_file, save=False,  plot=False):
+
+    annotation_file = 'demo_annotation.csv'  # Edit this line with your own annotation file
 
     data = parse_inkml(inkml_file)  # Parses inkml file
 
@@ -52,7 +54,6 @@ def bounding_boxes(inkml_file, plot=False):
 
     pboxs = pd.DataFrame(columns=cols)  # Create a new dataframe containing the pixel coordinates of the bounding boxes
 
-    filename = inkml_file.split('/')[len(inkml_file.split('/'))-1]  # Gets the current file name from the inkml file path
     # print('Calculating pixel coordinates for ' + filename, end='')
 
     for i in range(0, len(bboxs)):  # Transform data coordinates in bboxs to pixel coordinates
@@ -65,6 +66,14 @@ def bounding_boxes(inkml_file, plot=False):
 
     pboxs['class'] = bboxs[['class']].copy()  # Copy the labels from the original bboxs dataframe, as they will not change later
 
-    return pboxs, bboxs
+    if save:  # If save = True and annotation_file is a valid string (filename), append the bounding box pixel coordinates to the specified annotation file
+        filename = inkml_file.split('/')[len(inkml_file.split('/'))-1].replace('.inkml', '.png')  # Get the image file name from the inkml file
 
-bounding_boxes('./FCinkML/writer1_1.inkml')
+        pboxs.insert(0, 'filename', 'path/' + filename)  # Insert a new column to pboxs in position 0, containing the processed file name
+
+        cols = ['filename', 'x_min', 'y_min', 'x_max', 'y_max', 'class']  # csv file columns
+        pboxs.to_csv(annotation_file, columns=cols, header=False, index=False, mode='a')  # Add data to the specified annotation file
+
+        print('Annotation data saved to ' + annotation_file + '.')
+
+    return pboxs, bboxs
