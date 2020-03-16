@@ -1,0 +1,1 @@
+for %%v in (FCinkML\*inkml) do python "Z:\Zelethil\Documents\UniFi - Ingegneria Informatica\Data and Document Mining\Progetto\Flowcharts\bounding_boxes_cmd.py" -file "/FCinkML/%%~nxv"
