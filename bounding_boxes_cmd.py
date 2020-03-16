@@ -3,16 +3,13 @@ import pandas as pd
 from parse_inkml import parse_inkml
 from transform_coord import transform_coord
 
-# CONFIGURATION
-annotation_file = 'demo_annotation.csv'  # Insert your own annotation file
-path = ''  # Insert your png files path
-
-
 parser = argparse.ArgumentParser(description='Returns bounding boxes pixel coordinates for the specified file.')  # Parser definition
 
 parser.add_argument('-file', action='store', dest='file')  # Declare an argument called '-inkml_file' that is going to be stored in the 'inkml_file' variable
+parser.add_argument('-annotation', action='store', dest='annotation')  # Declare an argument called '-annotation' that is going to be stored in the 'annotation' variable
 
 inkml_file = parser.parse_args().file  # Parse the command line arguments and store the value in the 'inkml_file' variable
+annotation_file = parser.parse_args().annotation  # Parse the command line arguments and store the value in the 'annotation_file' variable
 
 filename = inkml_file.split('/')[len(inkml_file.split('/'))-1].replace('.inkml', '.png')  # Get the image file name from the inkml file
 
@@ -47,19 +44,15 @@ for k in range(0, len(data['group_id'].drop_duplicates())):  # For each unique t
 
 pboxs = pd.DataFrame(columns=cols)  # Create a new dataframe containing the pixel coordinates of the bounding boxes
 
-# print('Calculating pixel coordinates for ' + filename, end='')
-
 for i in range(0, len(bboxs)):  # Transform data coordinates in bboxs to pixel coordinates
     pboxs = transform_coord(data, bboxs, i, pboxs)
-
-# print(' done.')
 
 pboxs['class'] = bboxs[['class']].copy()  # Copy the labels from the original bboxs dataframe, as they will not change later
 
 # Append the bounding box pixel coordinates to the specified annotation file
 filename = inkml_file.split('/')[len(inkml_file.split('/'))-1].replace('.inkml', '.png')  # Get the image file name from the inkml file
 
-pboxs.insert(0, 'filename', path + '/' + filename)  # Insert a new column to pboxs in position 0, containing the processed file name
+pboxs.insert(0, 'filename', '/' + filename)  # Insert a new column to pboxs in position 0, containing the processed file name
 
 cols = ['filename', 'x_min', 'y_min', 'x_max', 'y_max', 'class']  # csv file columns
 pboxs.to_csv(annotation_file, columns=cols, header=False, index=False, mode='a')  # Add data to the specified annotation file
