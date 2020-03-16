@@ -66,3 +66,5 @@ def bounding_boxes(inkml_file, plot=False):
     pboxs['class'] = bboxs[['class']].copy()  # Copy the labels from the original bboxs dataframe, as they will not change later
 
     return pboxs, bboxs
+
+bounding_boxes('./FCinkML/writer1_1.inkml')

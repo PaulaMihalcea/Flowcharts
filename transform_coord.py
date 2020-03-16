@@ -79,5 +79,11 @@ def transform_coord(data, bboxs, i, pboxs):
         y_max = height
 
     pboxs = pboxs.append({'x_min': x_min, 'x_max': x_max, 'y_min': y_min, 'y_max': y_max}, ignore_index=True)  # Add pixel coordinates to pboxs, adding a ±e margin
+    
+    # Cast all pixel coordinates to int
+    pboxs['x_min'] = pboxs['x_min'].astype(int)
+    pboxs['y_min'] = pboxs['y_min'].astype(int)
+    pboxs['x_max'] = pboxs['x_max'].astype(int)
+    pboxs['y_max'] = pboxs['y_max'].astype(int)
 
     return pboxs

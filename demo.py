@@ -3,7 +3,7 @@ from parse_inkml import parse_inkml
 from plot_inkml import plot_inkml
 
 # Example svg to inkml conversion and inkml plotting
-n = 14
+n = 1
 
 for i in range(0, n+1):
     svg_file = './NeoSmartpenM1_demo/neo_smtpen_m1_demo_' + str(i) + '.svg'  # svg file to be converted to inkml
@@ -18,3 +18,6 @@ plot_inkml('./FCinkML/writer3_5.inkml', plot=show)  # Plots a random inkml file 
 
 plot_inkml(parse_inkml('./FCinkML/writer3_5.inkml'), plot=show, classes=True)  # Plots a random inkml file from the dataset (by parsed data) and highlights classes
 plot_inkml('./FCinkML/writer3_5.inkml', plot=show, classes=True)  # Plots a random inkml file from the dataset (by filename) and highlights classes
+
+from draw_bb import draw_bb
+draw_bb('./FCinkML/writer3_5.inkml', show=True)

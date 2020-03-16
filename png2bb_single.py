@@ -31,13 +31,7 @@ def png2bb_single(inkml_folder, inkml_file, save_bb=False):  # inkml_folder must
 
     if save_bb:  # If save_bb = True, create the annotation dataframe with the collected data
         annotation = pd.concat(boxes)
-        annotation.insert(0, 'filename', filename)
-
-        # Cast all pixel coordinates to int
-        annotation['x_min'] = annotation['x_min'].astype(int)
-        annotation['y_min'] = annotation['y_min'].astype(int)
-        annotation['x_max'] = annotation['x_max'].astype(int)
-        annotation['y_max'] = annotation['y_max'].astype(int)
+        annotation.insert(0, 'filename', 'path/' + filename)
 
         annotation.to_csv(inkml_folder + '/annotation_pathless_' + inkml_file.replace('.inkml', '') + '.txt', columns=cols, header=False, index=False)  # Save file
 
