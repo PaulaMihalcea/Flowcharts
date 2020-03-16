@@ -3,7 +3,7 @@ import cv2
 import pandas as pd
 
 
-def bb_test(img_folder, csv_file):
+def bb_test(img_folder, csv_file, bb_folder):
     cols = ['filename', 'x_min', 'y_min', 'x_max', 'y_max', 'class']  # csv file columns
 
     pboxs = pd.read_csv(csv_file, header=None)  # Loads csv file as a Pandas dataframe
@@ -28,8 +28,6 @@ def bb_test(img_folder, csv_file):
         colors[c] = tuple(colors[c])
 
     colors = dict(zip(classes, colors))  # Compile the colors dictionary with the new values
-
-    bb_folder = 'bb_test'  # Bounding box images folder
 
     if not os.path.exists(bb_folder):  # Create folder if it doesn't already exist (to avoid 'directory not found' errors)
         os.makedirs(bb_folder)
