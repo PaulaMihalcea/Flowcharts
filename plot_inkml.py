@@ -1,4 +1,6 @@
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use('TkAgg')
 from parse_inkml import parse_inkml
 
 
