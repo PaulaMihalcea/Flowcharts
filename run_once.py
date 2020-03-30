@@ -3,7 +3,6 @@ from png2bb import png2bb
 from bb_test import bb_test
 from divide_annotations import divide_annotations
 from divide_dataset import divide_dataset
-from get_text_traces import get_text_traces
 
 # Dataset conversion
 inkml2png('FCinkML')  # Convert the inkml files in the specified folder to png images; folder must be in the same directory as the inkml2png.py script
@@ -20,6 +19,3 @@ divide_annotations('annotation.csv', './FCinkML/listInkML_Train.txt', './FCinkML
 
 # Dataset
 divide_dataset('./FCinkML_png', './FCinkML/listInkML_Train.txt', './FCinkML/listInkML_Test.txt')
-
-# Text traces dataframe creation
-get_text_traces('FCinkML')
