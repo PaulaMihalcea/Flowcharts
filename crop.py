@@ -119,6 +119,3 @@ def new_coords(current_bboxs, x, y, filename, i):
             current_bboxs['y_max'][j] = str(int(current_bboxs['y_max'][j]) - y+e_y_max)
 
     return current_bboxs
-
-
-crop('FCinkML_png')
