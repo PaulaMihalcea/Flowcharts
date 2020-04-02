@@ -11,9 +11,6 @@ def crop(png_folder):
     annotation_file = 'annotation.csv'
     cropped_folder = png_folder + '_cropped'
 
-    if not os.path.exists(png_folder):  # Creates folder if it doesn't already exist (to avoid 'directory not found' errors)
-        os.makedirs(png_folder)
-
     if not os.path.exists(cropped_folder):  # Creates output folder if it doesn't already exist (to avoid 'directory not found' errors)
         os.makedirs(cropped_folder)
 
