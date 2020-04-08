@@ -30,7 +30,7 @@ def draw_bb(inkml_file, show=False, scale=1, save=False, save_bb=False):
 
     colors = dict(zip(classes, colors))  # Compile the colors dictionary with the new values
 
-    pboxs, _ = bounding_boxes(inkml_file, plot=False)  # Get pixel coordinates of bounding boxes
+    pboxs, _ = bounding_boxes(inkml_file)  # Get pixel coordinates of bounding boxes
 
     for i in range(0, len(pboxs)):  # Draw bounding boxes over image one by one
         cv2.rectangle(img, (int(pboxs['x_min'][i]), int(pboxs['y_min'][i])), (int(pboxs['x_max'][i]), int(pboxs['y_max'][i])),  colors[pboxs['class'][i]], 1)
